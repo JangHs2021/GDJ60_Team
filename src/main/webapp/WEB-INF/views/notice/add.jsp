@@ -9,7 +9,7 @@
 <body>
 	<h3>Notice Add Page</h3>
 	
-	<form action="./add" method="post">
+	<form action="./add" method="post" enctype="multipart/form-data">
 			글제목 <br>
 			<input type="text" placeholder="글제목을 입력하세요" name="noticeTitle" value=""> <br>
 			글내용 <br>

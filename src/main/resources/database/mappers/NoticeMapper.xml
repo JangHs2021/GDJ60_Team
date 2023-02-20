@@ -9,15 +9,42 @@
   			SELECT * FROM NOTICE
   		</select>
   		
-  		<select id="getNoticeDetail" parameterType="NoticeDTO" resultType="NoticeDTO">
-  			SELECT * FROM NOTICE
-  			WHERE NOTICENUMBER = #{noticeNumber}
+  		<select id="getNoticeDetail" parameterType="NoticeDTO" resultMap="noticeDetailResult">
+  			SELECT *
+			FROM NOTICE
+				LEFT OUTER JOIN
+				NOTICEIMG
+				USING(NOTICENUMBER)
+			WHERE NOTICENUMBER = #{noticeNumber}
   		</select>
   		
+  		<resultMap type="NoticeDTO" id="noticeDetailResult">
+			<id column="NOTICENUMBER" property="noticeNumber"/>
+			<result column="NOTICETITLE" property="noticeTitle"/>
+			<result column="NOTICEDETAIL" property="noticeDetail"/>
+			<result column="NOTICEWRITER" property="noticeWriter"/>
+			<result column="NOTICEDATE" property="noticeDate"/>
+			<result column="NOTICEHIT" property="noticeHit"/>
+			
+			<association property="noticeImgDTO" javaType="NoticeImgDTO">
+				<id column="FILENUM" property="fileNum"/>
+				<result column="FILENAME" property="fileName"/>
+				<result column="ORINAME" property="oriName"/>
+			</association>
+		</resultMap>
+  		
   		<insert id="setNoticeAdd" parameterType="NoticeDTO">
-  			INSERT INTO NOTICE
-  			VALUES (NOTICE_SEQ.NEXTVAL, #{noticeTitle}, #{noticeDetail}, #{noticeWriter}, SYSDATE, 1)
+  			<selectKey keyProperty="noticeNumber" resultType="Long" order="BEFORE">
+			SELECT NOTICE_SEQ.NEXTVAL FROM DUAL
+			</selectKey>
+			INSERT INTO NOTICE
+			VALUES (#{noticeNumber}, #{noticeTitle}, #{noticeDetail}, #{noticeWriter}, SYSDATE, 1)
   		</insert>
+  		
+  		<insert id="setNoticeImgAdd" parameterType="NoticeImgDTO">
+			INSERT INTO NOTICEIMG
+			VALUES (NOTICE_SEQ.NEXTVAL, #{noticeNumber}, #{fileName}, #{oriName})
+		</insert>
   		
   		<update id="setNoticeUpdate" parameterType="NoticeDTO">
   			UPDATE NOTICE SET NOTICETITLE = #{noticeTitle}, NOTICEDETAIL = #{noticeDetail}, NOTICEWRITER = #{noticeWriter} 

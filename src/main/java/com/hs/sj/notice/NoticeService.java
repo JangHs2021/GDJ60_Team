@@ -6,6 +6,7 @@ import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.hs.sj.util.FileManager;
 
@@ -30,10 +31,21 @@ public class NoticeService {
 	}
 	
 	// FileUpload
-	public int setNoticeAdd(NoticeDTO noticeDTO) throws Exception {
+	public int setNoticeAdd(NoticeDTO noticeDTO, MultipartFile pic) throws Exception {
+		int result = noticeDAO.setNoticeAdd(noticeDTO);
 		
-		
-		return noticeDAO.setNoticeAdd(noticeDTO);
+		if(!pic.isEmpty()) {
+			String realPath = servletContext.getRealPath("resources/upload/notice");
+			String fileName = fileManager.fileSave(pic, realPath);
+			
+			NoticeImgDTO noticeImgDTO = new NoticeImgDTO();
+			noticeImgDTO.setFileName(fileName);
+			noticeImgDTO.setOriName(pic.getOriginalFilename());
+			noticeImgDTO.setNoticeNumber(noticeDTO.getNoticeNumber());
+			
+			result = noticeDAO.setNoticeImgAdd(noticeImgDTO);
+		}
+		return result;
 	}
 	
 	public int setNoticeUpdate(NoticeDTO noticeDTO) throws Exception {
