@@ -5,28 +5,58 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>상세정보</title>
+<c:import url="../template/common_css.jsp"></c:import>
 </head>
 <body>
-	<h3>Detail Page</h3>
-	<hr>
 	
-	<c:if test="${not empty detail}">
-	<h3>글번호 : ${detail.noticeNumber}</h3> <br>
-	<h3>글제목 : ${detail.noticeTitle}</h3> <br>
-	<h3>작성자 : ${detail.noticeWriter}</h3> <br>
-	<h3>조회수 : ${detail.noticeHit}</h3> <br>
-	<h3>글내용 : ${detail.noticeDetail}</h3>
-	<div>
-		<c:if test="${not empty detail.noticeImgDTO}">
-			<img src="../resources/upload/notice/${detail.noticeImgDTO.fileName}">
-		</c:if>
+	<div class="container-fluid my-5">
+		<div class="row mb-4">
+			<h3 class="col-md-7 mx-auto text-center border-bottom border-dark pb-4">Detail Page</h3>
+		</div>
+	
+		<div class="row col-md-7 mx-auto">
+			<c:if test="${not empty detail}">
+			<div class="row g-3">
+				<div class="col-md-6">
+					글번호 : ${detail.noticeNumber}
+				</div>
+				<div class="col-md-12 mt-5">
+					글제목 : ${detail.noticeTitle}
+				</div>
+				<div class="col-md-12 mt-5">
+					작성자 : ${detail.noticeWriter}
+				</div>
+				<div class="col-md-12 mt-5">
+					글내용 : ${detail.noticeDetail}
+				</div>
+				<div class="col-md-12 mt-5">
+					조회수 : ${detail.noticeHit}
+				</div>
+			</div>
+			<div>
+				<c:if test="${not empty detail.noticeImgDTO}">
+					<img src="../resources/upload/notice/${detail.noticeImgDTO.fileName}">
+				</c:if>
+			</div>
+			</c:if>
+			
+			
+			<div class="row col-md-2 mx-auto mt-5">
+				<a href="./update?noticeNumber=${detail.noticeNumber}" class="btn btn-primary">수정</a>
+			</div>
+			
+			<div class="row col-md-2 mx-auto mt-5">
+				<a href="./delete?noticeNumber=${detail.noticeNumber}" class="btn btn-primary">삭제</a>
+			</div>
+			
+			<div class="row col-md-2 mx-auto mt-5">
+				<a href="/sj/notice/list" class="btn btn-primary">목록</a>
+			</div>
+			
+		</div>
 	</div>
-	</c:if>
 	
-	<a href="./update?noticeNumber=${detail.noticeNumber}">수정</a>
-	<a href="./delete?noticeNumber=${detail.noticeNumber}">삭제</a>
-	<a href="./list">목록</a>
-	
+	<c:import url="../template/common_js.jsp"></c:import>
 </body>
 </html>

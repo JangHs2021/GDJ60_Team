@@ -6,10 +6,10 @@
 </head>
 <body>
 <h1>
-	Hello world!  
+	HOME  
 </h1>
 	
-	<a href="notice/list">list</a>
+	<a href="notice/list">Notice list</a>
 	
 </body>
 </html>
