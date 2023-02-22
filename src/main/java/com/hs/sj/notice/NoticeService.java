@@ -41,7 +41,7 @@ public class NoticeService {
 			NoticeImgDTO noticeImgDTO = new NoticeImgDTO();
 			noticeImgDTO.setFileName(fileName);
 			noticeImgDTO.setOriName(pic.getOriginalFilename());
-			noticeImgDTO.setNoticeNumber(noticeDTO.getNoticeNumber());
+			noticeImgDTO.setNum(noticeDTO.getNum());
 			
 			result = noticeDAO.setNoticeImgAdd(noticeImgDTO);
 		}

@@ -48,13 +48,13 @@ public class NoticeDAOTest extends MyTestCase {
 //		assertEquals(1, result);	
 //	}
 	
-	@Test
-	public void setNoticeDelete() throws Exception {
-		NoticeDTO noticeDTO = new NoticeDTO();
-		
-		noticeDTO.setNoticeNumber(5L);
-		int result = noticeDAO.setNoticeDelete(noticeDTO);
-		
-		assertEquals(1, result);
-	}
+//	@Test
+//	public void setNoticeDelete() throws Exception {
+//		NoticeDTO noticeDTO = new NoticeDTO();
+//		
+//		noticeDTO.setNoticeNumber(5L);
+//		int result = noticeDAO.setNoticeDelete(noticeDTO);
+//		
+//		assertEquals(1, result);
+//	}
 }

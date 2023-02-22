@@ -14,17 +14,17 @@
 			FROM NOTICE
 				LEFT OUTER JOIN
 				NOTICEIMG
-				USING(NOTICENUMBER)
-			WHERE NOTICENUMBER = #{noticeNumber}
+				USING(NUM)
+			WHERE NUM = #{num}
   		</select>
   		
   		<resultMap type="NoticeDTO" id="noticeDetailResult">
-			<id column="NOTICENUMBER" property="noticeNumber"/>
-			<result column="NOTICETITLE" property="noticeTitle"/>
-			<result column="NOTICEDETAIL" property="noticeDetail"/>
-			<result column="NOTICEWRITER" property="noticeWriter"/>
-			<result column="NOTICEDATE" property="noticeDate"/>
-			<result column="NOTICEHIT" property="noticeHit"/>
+			<id column="NUM" property="num"/>
+			<result column="TITLE" property="title"/>
+			<result column="CONTENTS" property="contents"/>
+			<result column="WRITER" property="writer"/>
+			<result column="REGDATE" property="regDate"/>
+			<result column="HIT" property="hit"/>
 			
 			<association property="noticeImgDTO" javaType="NoticeImgDTO">
 				<id column="FILENUM" property="fileNum"/>
@@ -34,25 +34,25 @@
 		</resultMap>
   		
   		<insert id="setNoticeAdd" parameterType="NoticeDTO">
-  			<selectKey keyProperty="noticeNumber" resultType="Long" order="BEFORE">
+  			<selectKey keyProperty="num" resultType="Long" order="BEFORE">
 			SELECT NOTICE_SEQ.NEXTVAL FROM DUAL
 			</selectKey>
 			INSERT INTO NOTICE
-			VALUES (#{noticeNumber}, #{noticeTitle}, #{noticeDetail}, #{noticeWriter}, SYSDATE, 1)
+			VALUES (#{num}, #{title}, #{contents}, #{writer}, SYSDATE, 1)
   		</insert>
   		
   		<insert id="setNoticeImgAdd" parameterType="NoticeImgDTO">
 			INSERT INTO NOTICEIMG
-			VALUES (NOTICE_SEQ.NEXTVAL, #{noticeNumber}, #{fileName}, #{oriName})
+			VALUES (NOTICE_SEQ.NEXTVAL, #{num}, #{fileName}, #{oriName})
 		</insert>
   		
   		<update id="setNoticeUpdate" parameterType="NoticeDTO">
-  			UPDATE NOTICE SET NOTICETITLE = #{noticeTitle}, NOTICEDETAIL = #{noticeDetail}, NOTICEWRITER = #{noticeWriter} 
-			WHERE NOTICENUMBER = #{noticeNumber}
+  			UPDATE NOTICE SET TITLE = #{title}, CONTENTS = #{contents}, WRITER = #{writer} 
+			WHERE NUM = #{num}
   		</update>
   		
   		<delete id="setNoticeDelete" parameterType="NoticeDTO">
-  			DELETE NOTICE WHERE NOTICENUMBER = #{noticeNumber} 
+  			DELETE NOTICE WHERE NUM = #{num} 
   		</delete>
   		
   	</mapper>
